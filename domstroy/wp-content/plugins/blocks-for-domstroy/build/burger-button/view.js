@@ -1,18 +1,1 @@
-/******/ (() => { // webpackBootstrap
-/*!***********************************!*\
-  !*** ./src/burger-button/view.js ***!
-  \***********************************/
-function collapseSidebar() {
-  const sidemenu = document.querySelector(".template-part-sidebar__collapse");
-  if (sidemenu) {
-    if (this.getAttribute("aria-expanded") == "false") {
-      this.setAttribute("aria-expanded", "true");
-    } else {
-      this.setAttribute("aria-expanded", "false");
-    }
-  }
-}
-document.querySelector(".wp-block-create-block-burger-button").onclick = collapseSidebar;
-/******/ })()
-;
-//# sourceMappingURL=view.js.map
+document.querySelector(".wp-block-create-block-burger-button").onclick=function(){document.querySelector(".template-part-sidebar__collapse")&&("false"==this.getAttribute("aria-expanded")?this.setAttribute("aria-expanded","true"):this.setAttribute("aria-expanded","false"))};
