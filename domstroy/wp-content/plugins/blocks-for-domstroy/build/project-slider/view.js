@@ -1,1 +1,108 @@
-(()=>{if(document.querySelector(".wp-block-create-block-project-slider")){const l=document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__view-area li"),o=document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__view-area li").length;let i=0,s=!1;function e(e,t,r){s=r,(e=+e)!==i&&(l.forEach((e=>{e.className="wp-block-create-block-project-slider-single"})),"left"==t?(l[i].classList.add("left"),l[e].classList.add("from-right")):(l[i].classList.add("right"),l[e].classList.add("from-left")),l[i].setAttribute("aria-hidden","true"),l[e].classList.add("current"),l[e].setAttribute("aria-hidden","false"),document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__nav ul li button").forEach(((t,r)=>{r==e?(t.className="current",t.firstElementChild.innerHTML="Изображение (Текущее)"):(t.className="",t.firstElementChild.innerHTML="Изображение")})),i=e)}function t(){let t=i-1;t<0&&(t=o-1),e(t,"right",!1),c(t)}function r(){let t=i+1;t==o&&(t=0),e(t,"left",!1),c(t)}function c(e){document.querySelector(".wp-block-create-block-project-slider .project-slider__liveregion").textContent="Изображение "+(e+1)+" из "+o}l.forEach(((e,t)=>{0==t?(e.classList.add("current"),e.setAttribute("aria-hidden","false")):e.setAttribute("aria-hidden","true")})),document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__nav ul li button").forEach((t=>{t.addEventListener("click",(()=>{const r=t.getAttribute("data-slide");e(r,i<r?"left":"right",!0)}))})),document.querySelector(".wp-block-create-block-project-slider .project-slider__controls li .project-slider__btn-prev").addEventListener("click",t),document.querySelector(".wp-block-create-block-project-slider .project-slider__controls li .project-slider__btn-next").addEventListener("click",r),document.querySelector(".wp-block-create-block-project-slider .project-slider__view-area").addEventListener("transitionend",(function(e){if(e.target,s&&e.target.classList.contains("wp-block-create-block-project-slider-single")){const e=document.querySelector(".wp-block-create-block-project-slider-single.current");e.setAttribute("tabindex","-1"),e.focus(),s=!1}})),document.querySelector(".wp-block-create-block-project-slider").addEventListener("keydown",(function(e){"ArrowRight"==e.key&&r(),"ArrowLeft"==e.key&&t()}))}})();
+/******/ (() => { // webpackBootstrap
+/*!************************************!*\
+  !*** ./src/project-slider/view.js ***!
+  \************************************/
+if (document.querySelector(".wp-block-create-block-project-slider")) {
+  // slider variables
+  const slides = document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__view-area li");
+  const length = document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__view-area li").length;
+  let index = 0;
+  let focus = false;
+
+  // functions
+  function setSlide(newCurrent, direction, setFocus) {
+    newCurrent = +newCurrent;
+    focus = setFocus;
+    if (newCurrent !== index) {
+      // reset slide classes
+      slides.forEach(li => {
+        li.className = "wp-block-create-block-project-slider-single";
+      });
+      if (direction == "left") {
+        slides[index].classList.add("left");
+        slides[newCurrent].classList.add("from-right");
+      } else {
+        slides[index].classList.add("right");
+        slides[newCurrent].classList.add("from-left");
+      }
+      slides[index].setAttribute('aria-hidden', 'true');
+      slides[newCurrent].classList.add("current");
+      slides[newCurrent].setAttribute('aria-hidden', 'false');
+
+      // update buttons
+      document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__nav ul li button").forEach((item, index) => {
+        if (index == newCurrent) {
+          item.className = "current";
+          item.firstElementChild.innerHTML = 'Изображение (Текущее)';
+        } else {
+          item.className = "";
+          item.firstElementChild.innerHTML = 'Изображение';
+        }
+      });
+      index = newCurrent;
+    }
+  }
+  function prevSlide() {
+    let newCurrent = index - 1;
+    if (newCurrent < 0) newCurrent = length - 1;
+    setSlide(newCurrent, "right", false);
+    setLiveRegion(newCurrent);
+  }
+  function nextSlide() {
+    let newCurrent = index + 1;
+    if (newCurrent == length) newCurrent = 0;
+    setSlide(newCurrent, "left", false);
+    setLiveRegion(newCurrent);
+  }
+  function setLiveRegion(newCurrent) {
+    document.querySelector(".wp-block-create-block-project-slider .project-slider__liveregion").textContent = "Изображение " + (newCurrent + 1) + " из " + length;
+  }
+  function setFocusHere(event) {
+    const slide = event.target;
+    if (focus) {
+      if (event.target.classList.contains("wp-block-create-block-project-slider-single")) {
+        const currentSlide = document.querySelector(".wp-block-create-block-project-slider-single.current");
+        currentSlide.setAttribute("tabindex", "-1");
+        currentSlide.focus();
+        focus = false;
+      }
+    }
+  }
+  function addKeyboardAccessibility(event) {
+    if (event.key == "ArrowRight") {
+      nextSlide();
+    }
+    if (event.key == "ArrowLeft") {
+      prevSlide();
+    }
+  }
+  !function () {
+    slides.forEach((li, index) => {
+      if (index == 0) {
+        li.classList.add("current");
+        li.setAttribute("aria-hidden", "false");
+      } else {
+        li.setAttribute("aria-hidden", "true");
+      }
+    });
+  }();
+
+  // addEventListeners
+  document.querySelectorAll(".wp-block-create-block-project-slider .project-slider__nav ul li button").forEach(button => {
+    button.addEventListener("click", () => {
+      const newCurrent = button.getAttribute("data-slide");
+      if (index < newCurrent) {
+        setSlide(newCurrent, "left", true);
+      } else {
+        setSlide(newCurrent, "right", true);
+      }
+    });
+  });
+  document.querySelector(".wp-block-create-block-project-slider .project-slider__controls li .project-slider__btn-prev").addEventListener("click", prevSlide);
+  document.querySelector(".wp-block-create-block-project-slider .project-slider__controls li .project-slider__btn-next").addEventListener("click", nextSlide);
+  document.querySelector(".wp-block-create-block-project-slider .project-slider__view-area").addEventListener("transitionend", setFocusHere);
+  document.querySelector(".wp-block-create-block-project-slider").addEventListener("keydown", addKeyboardAccessibility);
+}
+/******/ })()
+;
+//# sourceMappingURL=view.js.map
