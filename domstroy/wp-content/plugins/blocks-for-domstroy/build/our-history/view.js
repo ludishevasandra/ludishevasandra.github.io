@@ -11,14 +11,18 @@ if (document.querySelector('.wp-block-create-block-our-history')) {
       item.style.height = maxTabpanelHeight + 'px';
     });
   }
-  function showTabContent() {
-    const tabpanel = document.getElementById(this.getAttribute("aria-controls"));
+  function showTabContent(button) {
+    const tabpanel = document.getElementById(button.getAttribute("aria-controls"));
     const offset = tabpanel.offsetTop;
     document.querySelector(".wp-block-create-block-our-history .our-history__scroll-area").style.transform = "translateY(-" + offset + "px)";
     document.querySelector('.wp-block-create-block-our-history .our-history__tabs button[aria-selected="true"]').setAttribute("aria-selected", "false");
-    this.setAttribute("aria-selected", "true");
+    button.setAttribute("aria-selected", "true");
     document.querySelector('.wp-block-create-block-our-history .wp-block-create-block-our-history-tabpanel[aria-hidden="false"]').setAttribute("aria-hidden", "true");
     tabpanel.setAttribute("aria-hidden", "false");
+  }
+  function windowResized() {
+    setMaxHeight();
+    showTabContent(document.querySelector('.wp-block-create-block-our-history .our-history__tabs button[aria-selected="true"]'));
   }
   // init
   !function () {
@@ -45,9 +49,9 @@ if (document.querySelector('.wp-block-create-block-our-history')) {
 
   // addEventListener
   document.querySelectorAll(".wp-block-create-block-our-history .our-history__tabs button").forEach(button => {
-    button.addEventListener('click', showTabContent);
+    button.addEventListener('click', () => showTabContent(button));
   });
-  window.addEventListener("resize", setMaxHeight);
+  window.addEventListener("resize", windowResized);
 }
 /******/ })()
 ;

@@ -2,9 +2,9 @@
 /*!****************************!*\
   !*** ./src/dialog/view.js ***!
   \****************************/
-function closeModal() {
-  const dialog = this.closest(".wp-block-create-block-dialog");
+function closeModal(dialog) {
   dialog.close();
+  document.body.classList.remove("scroll-lock");
 }
 function setLocation(dialog) {
   const select = dialog.querySelector(".wpcf7-form span[data-name=\"your-location\"] select");
@@ -23,13 +23,23 @@ function printFileName(event) {
     output.innerText = encodeURIComponent(event.target.files[0].name);
   }
 }
-if (document.querySelector(".wp-block-create-block-dialog .wp-block-dialog__close-button")) {
-  document.querySelectorAll(".wp-block-create-block-dialog .wp-block-dialog__close-button").forEach(button => button.onclick = closeModal);
-}
 if (document.querySelector(".wp-block-create-block-dialog .wpcf7-form .wpcf7-file")) {
   document.querySelectorAll(".wp-block-create-block-dialog .wpcf7-form .wpcf7-file").forEach(input => input.onchange = printFileName);
 }
 document.querySelectorAll(".wp-block-create-block-dialog").forEach(dialog => setLocation(dialog));
+document.querySelectorAll(".wp-block-create-block-dialog").forEach(dialog => {
+  dialog.addEventListener("click", function ({
+    currentTarget,
+    target
+  }) {
+    if (target === currentTarget) closeModal(dialog);
+  });
+  if (dialog.querySelector(".wp-block-dialog__close-button")) {
+    dialog.querySelector(".wp-block-dialog__close-button").addEventListener("click", function () {
+      closeModal(dialog);
+    });
+  }
+});
 /******/ })()
 ;
 //# sourceMappingURL=view.js.map

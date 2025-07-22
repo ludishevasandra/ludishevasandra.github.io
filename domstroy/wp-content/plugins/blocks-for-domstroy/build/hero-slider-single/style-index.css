@@ -74,7 +74,7 @@
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), var(--mobile-image-url);
   }
   .wp-block-create-block-hero-slider-single article {
-    padding: 50px 80px 80px;
+    padding: 50px 65px 80px;
   }
 }
 
