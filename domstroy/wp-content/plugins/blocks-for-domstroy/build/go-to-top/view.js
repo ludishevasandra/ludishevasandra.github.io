@@ -1,0 +1,1 @@
+document.querySelector(".wp-block-create-block-go-to-top .go-to-top__button").onclick=function(){document.documentElement.scrollIntoView({behavior:"smooth",block:"start"})};

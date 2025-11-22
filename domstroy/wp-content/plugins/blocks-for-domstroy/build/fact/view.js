@@ -1,0 +1,1 @@
+(()=>{if(document.querySelector(".wp-block-create-block-fact")){const e=document.querySelectorAll(".wp-block-create-block-fact"),c=new IntersectionObserver((e,c)=>{e.forEach(e=>{e.isIntersecting&&e.target.classList.add("animated")})},{rootMargin:"0px 0px 150px 0px"});e.forEach(e=>c.observe(e))}})();

@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /lumedesign/
+Disallow: /domstroy/
+Disallow: /coffee-arabica/
+Sitemap: https://ludishevasandra.github.io/sitemap.xml
